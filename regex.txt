@@ -1,0 +1,16 @@
+,(?=[^,]*$)
+
+          
+  '{
+      "node_type": "'+$node_type+ '",
+      "hostname": "'+$hostname+'",
+      "description": "'+$desc+'",
+      "IP": "'+$ip+'",
+      "os": "'+$os+'",
+      "cluster": "'+$cluster+'",
+      "current_host": "'+$current_host+'",
+      "wwpn": "'+$wwpn+'",
+      "wwnn": "'+$wwnn+'",
+      "model": "'+$model+'",
+      "bay": "15"
+    },' + + "`n`n"

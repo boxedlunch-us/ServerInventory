@@ -1,0 +1,107 @@
+﻿<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Server List</title>
+    <link rel="alternate" type="application/rss+xml" charset="UTF-8 title=" rss 2.0 href="http://www.datatables.net/rss.xml">
+    <link rel="stylesheet" type="text/css" charset="UTF-8" href="css/style.css">
+    <style type="text/css" class="init">
+    </style>
+    <script type="text/javascript" charset="UTF-8" language="javascript" src="js/jquery.min.js">
+    </script>
+    <script type="text/javascript" charset="UTF-8" language="javascript" src="js/jquery.dataTables.min.js">
+    </script>
+
+    <script type="text/javascript" class="init">
+
+
+        /* Formatting function for row details - modify as you need */
+        function format(d) {
+            // `d` is the original data object for the row
+            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+                '<tr>' +
+                    '<td>Cluster:</td>' +
+                    '<td>' + d.cluster + '</td>' +
+                    '<td>Current Host:</td>' +
+                    '<td>' + d.current_host + '</td>' +
+                '</tr>' +
+                '<tr>' +
+                    '<td>WWPN:</td>' +
+                    '<td>' + d.wwpn + '</td>' +
+                    '<td>WWNN:</td>' +
+                    '<td>' + d.wwnn + '</td>' +
+                '</tr>' +
+                                '<tr>' +
+                    '<td>Model:</td>' +
+                    '<td>' + d.model + '</td>' +
+                    '<td>Bay:</td>' +
+                    '<td>' + d.bay + '</td>' +
+                '</tr>' +
+            '</table>';
+        }
+
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                "ajax": "data/server_data.json",
+                "columns": [
+                    {
+                        "className": 'details-control',
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": ''
+                    },
+                    { "data": "node_type" },
+                    { "data": "hostname" },
+                    { "data": "description" },
+                    { "data": "IP" },
+                    { "data": "os" }
+                ],
+                "order": [[1, 'asc']]
+            });
+
+            // Add event listener for opening and closing details
+            $('#example tbody').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    // Open this row
+                    row.child(format(row.data())).show();
+                    tr.addClass('shown');
+                }
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <table id="example" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Node Type</th>
+                <th>Hostname</th>
+                <th>Description</th>
+                <th>IP</th>
+                <th>OS</th>
+
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th>Node Type</th>
+                <th>Hostname</th>
+                <th>Description</th>
+                <th>IP</th>
+                <th>OS</th>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>
